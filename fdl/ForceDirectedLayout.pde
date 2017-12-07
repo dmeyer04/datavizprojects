@@ -7,7 +7,7 @@ class ForceDirectedLayout {
   private float c = (float)(10 * Math.pow(10, 1));
 
   ForceDirectedLayout() {
-    p = new Parser("full2.csv");
+    p = new Parser("full.csv");
     for (Ball ball : p.balls.values()) {
       balls.add(ball);
     }
@@ -34,7 +34,7 @@ class ForceDirectedLayout {
       totalForce.add(applyHookes(b));
       totalForce.add(applyCoulombs(b));
       b.force = totalForce;
-      energy += 0.5*b.mass*totalForce.copy().dot(totalForce);
+      energy += 0.5*b.mass*copy(totalForce).dot(totalForce);
     }
     return energy;
   }
@@ -46,8 +46,8 @@ class ForceDirectedLayout {
           float q1 = b1.mass * 2;
           float q2 = b2.mass * 2;
           float dist = (float)Math.pow(b1.p.dist(b2.p), 2);
-          u = b1.p.copy().sub(b2.p);
-          u.normalize();
+          u = copy(b1.p).sub(b2.p);
+          normalize(u);
           u.mult((Math.abs(q1 * q2)) / dist);
           force.add(u);
       }
